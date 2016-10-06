@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <math.h>
+
+float dotProductFunc(float vector1[],float vector2[]){
+	int i = 0;
+	float product = 0;
+	for(i=0;i<100;i++){
+		product +=  vector1[i]*vector2[i];
+	}
+	return product;
+}
+float magnitudeFunc(float vector1[]){
+	return dotProductFunc(vector1,vector1);
+}
+
+float cosineSimilarity(float vector1[],float vector2[]){
+	float magnitiude = 0,dotProduct = 0;
+	dotProduct = dotProductFunc(vector1,vector2);
+	magnitiude  = sqrt(magnitudeFunc(vector1))*sqrt(magnitudeFunc(vector2));
+	return dotProduct/magnitiude;
+}
+
+main(int argc, char *argv[])
+{
+	int i=0,counter = 0;
+	char string[2][20];
+	float vectors[2][100];
+	
+	FILE *file;
+	file = fopen(argv[1],"r");
+	for(i=0;i<2;i++){
+		fscanf(file,"%s",string[i]);
+		//printf("String: %s",string[i]);
+		//printf("\n");
+			for(counter=0; counter<100;counter++){
+				fscanf(file,"%f",&vectors[i][counter]);
+				//printf("Number:%d, Vector: %.6f",counter + 1, vectors[i][counter]);
+				//printf("\n");
+			}
+	}
+	fclose(file);
+	
+	printf("Cos: %.6f\n",cosineSimilarity(vectors[0],vectors[1]));
+	
+}                     
